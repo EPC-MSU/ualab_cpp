@@ -2,10 +2,19 @@
 #define UALAB_H
 
 #include <QMainWindow>
-#include <QScopedPointer>
+#include <QString>
+#include <QTimer>
+#include <QTime>
+//#include <QtSerialPort/QSerialPort>
+//#include <QtSerialPort/QSerialPortInfo>
+#include <QFile>
+#include <qwt_plot_curve.h>
+#include <qwt_plot_grid.h>
+#include <qwt_plot_picker.h>
+#include <qwt_symbol.h>
 
 namespace Ui {
-class ualab;
+class MainWindow;
 }
 
 class ualab : public QMainWindow
@@ -17,7 +26,12 @@ public:
     ~ualab() override;
 
 private:
-    QScopedPointer<Ui::ualab> m_ui;
+    Ui::MainWindow *m_ui;
+    QwtPlotGrid *grid;
+    QwtPlotCurve *cruve;
+
+public slots:
+    void this_application();
 };
 
 #endif // UALAB_H
