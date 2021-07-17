@@ -5,9 +5,10 @@
 #include <QString>
 #include <QTimer>
 #include <QTime>
-//#include <QtSerialPort/QSerialPort>
-//#include <QtSerialPort/QSerialPortInfo>
 #include <QFile>
+#include <QList>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_grid.h>
 #include <qwt_plot_picker.h>
@@ -29,9 +30,12 @@ private:
     Ui::MainWindow *m_ui;
     QwtPlotGrid *grid;
     QwtPlotCurve *cruve;
+//     QList *listports;
+    QSerialPortInfo *serial;
 
 public slots:
     void this_application();
+    void rescan();
 };
 
 #endif // UALAB_H

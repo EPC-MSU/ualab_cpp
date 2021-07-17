@@ -1471,14 +1471,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionRescan</sender>
-   <signal>triggered()</signal>
-   <receiver>rescan_botton</receiver>
-   <slot>click()</slot>
+   <sender>rescan_botton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionRescan</receiver>
+   <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>869</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>1151</x>

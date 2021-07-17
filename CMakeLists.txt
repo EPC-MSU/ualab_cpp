@@ -10,7 +10,7 @@ set(CMAKE_AUTOUIC ON)
 
 # Find libraryies
 include(FindQwt.cmake)
-find_package(Qt5Widgets CONFIG REQUIRED)
+find_package(Qt5 CONFIG REQUIRED Core Widgets Gui SerialPort)
 
 set(ualab_SRC
   src/main.cpp
@@ -19,9 +19,9 @@ set(ualab_SRC
 
 # Tell CMake to create the executable
 add_executable(ualab ${ualab_SRC})
-
+#qt5_use_modules(ualab Core Widgets Gui SerialPort)
 # Use the Widgets module from Qt 5.
-target_link_libraries(ualab Qt5::Widgets Qwt::Qwt)
+target_link_libraries(ualab Qt5::Widgets Qt5::SerialPort Qwt::Qwt)
 
 # Install the executable
 install(TARGETS ualab DESTINATION bin)

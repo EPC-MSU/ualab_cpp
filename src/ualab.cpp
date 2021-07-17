@@ -41,8 +41,13 @@ ualab::ualab(QWidget *parent) :
     m_ui->action_start_stop_recording->setEnabled(false);
     m_ui->action_start_stop_getting_data->setEnabled(false);
 
-    connect(m_ui->actionThis_Application, SIGNAL(triggered(bool)), this, SLOT(this_application()));
+//     QSerialPortInfo *serial = new QSerialPortInfo();
+//     QList<QSerialPortInfo> serials = serial->availablePorts();
+//     m_ui->comboBox_ports->addItems(Qstring:: QSerialPortInfo::availablePorts());
 
+    connect(m_ui->actionThis_Application, SIGNAL(triggered(bool)), this, SLOT(this_application()));
+    connect(m_ui->actionRescan, SIGNAL(triggered(bool)), this, SLOT(rescan()));
+    rescan();
 //     connect(m_ui->, SIGNAL(triggered(bool)), this, SLOT(this_application()));
 }
 
@@ -55,3 +60,14 @@ void ualab::this_application()
     msbox.setText("This is a simple cross-platform application for the usbadc10 device.\nVersion dev\nCopyright © 2021 Nikita Presnov\npresnovnikita@yandex.ru");
     msbox.exec();
 }
+
+void ualab::rescan()
+{
+    m_ui->comboBox_ports->clear();
+    const auto infos = QSerialPortInfo::availablePorts();
+    for (const QSerialPortInfo &info : infos)
+    {
+        m_ui->comboBox_ports->addItem(info.portName());
+    }
+}
+
