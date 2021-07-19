@@ -14,6 +14,8 @@
 #include <qwt_plot_picker.h>
 #include <qwt_symbol.h>
 
+#define NUMBERFRAMES 1000
+
 namespace Ui {
 class MainWindow;
 }
@@ -30,8 +32,8 @@ public:
                                       QColor(0, 255, 0), QColor(255, 170, 255), QColor(111, 111, 111),
                                       QColor(170, 85, 0)};
     int progressframes;
-    double dataY[10][1000];
-    double dataX[1000];
+    double dataY[10][NUMBERFRAMES];
+    double dataX[NUMBERFRAMES];
 
 private:
     Ui::MainWindow *m_ui;

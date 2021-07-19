@@ -91,7 +91,7 @@ void ualab::rescan()
 
 void ualab::updatrgraph()
 {
-    if(progressframes < 1000)
+    if(progressframes < NUMBERFRAMES)
     {
         dataX[progressframes] = progressframes;
         for(int j = 0; j < 10; j++)
@@ -100,28 +100,29 @@ void ualab::updatrgraph()
         }
         for(int i = 0; i < 10; i++)
         {
+//             if(m_ui->)
             cruve[i]->setSamples(dataX, dataY[i], progressframes+1);
         }
     }
-    else if(progressframes < INT_MAX/1000)
+    else if(progressframes < INT_MAX/NUMBERFRAMES)
     {
-        for(int i = 0; i < 1000-1; i++)
+        for(int i = 0; i < NUMBERFRAMES-1; i++)
         {
             dataX[i] = dataX[i+1];
         }
-        dataX[1000-1] = progressframes;
+        dataX[NUMBERFRAMES-1] = progressframes;
 
         for(int j = 0; j < 10; j++)
         {
-            for(int i = 0; i < 1000-1; i++)
+            for(int i = 0; i < NUMBERFRAMES-1; i++)
             {
                 dataY[j][i] = dataY[j][i+1];
             }
-            dataY[j][1000-1] = sin((float)progressframes / 100 + (float)j / 20) + 1.5;
+            dataY[j][NUMBERFRAMES-1] = sin((float)progressframes / 100 + (float)j / 20) + 1.5;
         }
         for(int i = 0; i < 10; i++)
         {
-            cruve[i]->setSamples(dataX, dataY[i], 1000);
+            cruve[i]->setSamples(dataX, dataY[i], NUMBERFRAMES);
         }
     }
     else
@@ -132,7 +133,7 @@ void ualab::updatrgraph()
 
 void ualab::start_stop_handler()
 {
-    for(int i = 0; i < 1000; i++)
+    for(int i = 0; i < NUMBERFRAMES; i++)
     {
         dataX[i] = 0;
         for(int j = 0; j < 10; j++)
@@ -141,7 +142,7 @@ void ualab::start_stop_handler()
         }
     }
     progressframes = 0;
-    int period = 1000 * m_ui->comboBox_period_val->currentData().toInt();
+    int period = NUMBERFRAMES * m_ui->comboBox_period_val->currentData().toInt();
     tmr->setInterval(period);
     tmr->start();
 }
