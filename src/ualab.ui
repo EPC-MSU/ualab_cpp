@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>987</width>
-    <height>489</height>
+    <width>1119</width>
+    <height>549</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -573,8 +573,29 @@
         </item>
         <item>
          <widget class="QLabel" name="status_recording">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
           <property name="text">
-           <string>No recordig</string>
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap>../recording_disable.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -791,7 +812,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>987</width>
+     <width>1119</width>
      <height>30</height>
     </rect>
    </property>
@@ -1481,8 +1502,8 @@
      <y>314</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1151</x>
-     <y>383</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
