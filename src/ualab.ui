@@ -38,7 +38,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QCheckBox" name="b_1_blue">
+         <widget class="QCheckBox" name="b_01">
           <property name="palette">
            <palette>
             <active>
@@ -90,7 +90,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_2_green">
+         <widget class="QCheckBox" name="b_02">
           <property name="palette">
            <palette>
             <active>
@@ -137,7 +137,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_3_red">
+         <widget class="QCheckBox" name="b_03">
           <property name="palette">
            <palette>
             <active>
@@ -184,7 +184,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_4_black">
+         <widget class="QCheckBox" name="b_04">
           <property name="palette">
            <palette>
             <active>
@@ -231,7 +231,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_5_orange">
+         <widget class="QCheckBox" name="b_05">
           <property name="palette">
            <palette>
             <active>
@@ -281,7 +281,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_6_blue_light">
+         <widget class="QCheckBox" name="b_06">
           <property name="palette">
            <palette>
             <active>
@@ -328,7 +328,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_7_green_light">
+         <widget class="QCheckBox" name="b_07">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -381,7 +381,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_8_pig">
+         <widget class="QCheckBox" name="b_08">
           <property name="palette">
            <palette>
             <active>
@@ -428,7 +428,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_9_gray">
+         <widget class="QCheckBox" name="b_09">
           <property name="palette">
            <palette>
             <active>
@@ -475,7 +475,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QCheckBox" name="b_10_brown">
+         <widget class="QCheckBox" name="b_10">
           <property name="palette">
            <palette>
             <active>
@@ -574,7 +574,7 @@
         <item>
          <widget class="QLabel" name="status_recording">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -592,10 +592,13 @@
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap>../recording_disable.png</pixmap>
+           <pixmap>../record_green.svg</pixmap>
           </property>
           <property name="scaledContents">
-           <bool>true</bool>
+           <bool>false</bool>
+          </property>
+          <property name="openExternalLinks">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -848,16 +851,16 @@
      <property name="title">
       <string>Channels</string>
      </property>
-     <addaction name="action1_Blue"/>
-     <addaction name="action2_Green"/>
-     <addaction name="action3_Red"/>
-     <addaction name="action4_Black"/>
-     <addaction name="action5_Orange"/>
-     <addaction name="action6_Blue_Light"/>
-     <addaction name="action7_Green_Light"/>
-     <addaction name="action8_Pig"/>
-     <addaction name="action9_Gray"/>
-     <addaction name="action10_Brown"/>
+     <addaction name="action01"/>
+     <addaction name="action02"/>
+     <addaction name="action03"/>
+     <addaction name="action04"/>
+     <addaction name="action05"/>
+     <addaction name="action06"/>
+     <addaction name="action07"/>
+     <addaction name="action08"/>
+     <addaction name="action09"/>
+     <addaction name="action10"/>
     </widget>
     <addaction name="menuChannels_2"/>
    </widget>
@@ -916,7 +919,7 @@
     <string>This Application</string>
    </property>
   </action>
-  <action name="action1_Blue">
+  <action name="action01">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -930,7 +933,7 @@
     <string>Ctrl+1</string>
    </property>
   </action>
-  <action name="action2_Green">
+  <action name="action02">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -944,7 +947,7 @@
     <string>Ctrl+2</string>
    </property>
   </action>
-  <action name="action3_Red">
+  <action name="action03">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -958,7 +961,7 @@
     <string>Ctrl+3</string>
    </property>
   </action>
-  <action name="action4_Black">
+  <action name="action04">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -972,7 +975,7 @@
     <string>Ctrl+4</string>
    </property>
   </action>
-  <action name="action5_Orange">
+  <action name="action05">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -986,7 +989,7 @@
     <string>Ctrl+5</string>
    </property>
   </action>
-  <action name="action6_Blue_Light">
+  <action name="action06">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1000,7 +1003,7 @@
     <string>Ctrl+6</string>
    </property>
   </action>
-  <action name="action7_Green_Light">
+  <action name="action07">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1014,7 +1017,7 @@
     <string>Ctrl+7</string>
    </property>
   </action>
-  <action name="action8_Pig">
+  <action name="action08">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1028,7 +1031,7 @@
     <string>Ctrl+8</string>
    </property>
   </action>
-  <action name="action9_Gray">
+  <action name="action09">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1042,7 +1045,7 @@
     <string>Ctrl+9</string>
    </property>
   </action>
-  <action name="action10_Brown">
+  <action name="action10">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -1092,9 +1095,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action1_Blue</sender>
+   <sender>action01</sender>
    <signal>triggered()</signal>
-   <receiver>b_1_blue</receiver>
+   <receiver>b_01</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1108,9 +1111,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action2_Green</sender>
+   <sender>action02</sender>
    <signal>triggered()</signal>
-   <receiver>b_2_green</receiver>
+   <receiver>b_02</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1124,9 +1127,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action3_Red</sender>
+   <sender>action03</sender>
    <signal>triggered()</signal>
-   <receiver>b_3_red</receiver>
+   <receiver>b_03</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1140,9 +1143,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action4_Black</sender>
+   <sender>action04</sender>
    <signal>triggered()</signal>
-   <receiver>b_4_black</receiver>
+   <receiver>b_04</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1156,9 +1159,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action10_Brown</sender>
+   <sender>action10</sender>
    <signal>triggered()</signal>
-   <receiver>b_10_brown</receiver>
+   <receiver>b_10</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1172,9 +1175,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action9_Gray</sender>
+   <sender>action09</sender>
    <signal>triggered()</signal>
-   <receiver>b_9_gray</receiver>
+   <receiver>b_09</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1188,9 +1191,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action8_Pig</sender>
+   <sender>action08</sender>
    <signal>triggered()</signal>
-   <receiver>b_8_pig</receiver>
+   <receiver>b_08</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1204,9 +1207,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action7_Green_Light</sender>
+   <sender>action07</sender>
    <signal>triggered()</signal>
-   <receiver>b_7_green_light</receiver>
+   <receiver>b_07</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1220,9 +1223,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action6_Blue_Light</sender>
+   <sender>action06</sender>
    <signal>triggered()</signal>
-   <receiver>b_6_blue_light</receiver>
+   <receiver>b_06</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1236,9 +1239,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>action5_Orange</sender>
+   <sender>action05</sender>
    <signal>triggered()</signal>
-   <receiver>b_5_orange</receiver>
+   <receiver>b_05</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1252,14 +1255,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionSave</sender>
-   <signal>triggered()</signal>
-   <receiver>save_button</receiver>
-   <slot>click()</slot>
+   <sender>save_button</sender>
+   <signal>clicked()</signal>
+   <receiver>actionSave</receiver>
+   <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>1023</x>
+     <y>161</y>
     </hint>
     <hint type="destinationlabel">
      <x>1151</x>
@@ -1268,14 +1271,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>action_start_stop_getting_data</sender>
-   <signal>triggered()</signal>
-   <receiver>start_stop</receiver>
-   <slot>click()</slot>
+   <sender>start_stop</sender>
+   <signal>clicked()</signal>
+   <receiver>action_start_stop_getting_data</receiver>
+   <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>1023</x>
+     <y>53</y>
     </hint>
     <hint type="destinationlabel">
      <x>1151</x>
@@ -1284,14 +1287,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>action_start_stop_recording</sender>
-   <signal>triggered()</signal>
-   <receiver>start_stop_recording</receiver>
-   <slot>click()</slot>
+   <sender>start_stop_recording</sender>
+   <signal>clicked()</signal>
+   <receiver>action_start_stop_recording</receiver>
+   <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>1012</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>1151</x>
@@ -1300,14 +1303,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionConnect</sender>
-   <signal>triggered()</signal>
-   <receiver>connect_button</receiver>
-   <slot>click()</slot>
+   <sender>connect_button</sender>
+   <signal>clicked()</signal>
+   <receiver>actionConnect</receiver>
+   <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>978</x>
+     <y>273</y>
     </hint>
     <hint type="destinationlabel">
      <x>864</x>
@@ -1316,14 +1319,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionDisconnect</sender>
-   <signal>triggered()</signal>
-   <receiver>disconnect_button</receiver>
-   <slot>click()</slot>
+   <sender>disconnect_button</sender>
+   <signal>clicked()</signal>
+   <receiver>actionDisconnect</receiver>
+   <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
+     <x>1068</x>
+     <y>273</y>
     </hint>
     <hint type="destinationlabel">
      <x>1150</x>
@@ -1332,9 +1335,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_1_blue</sender>
+   <sender>b_01</sender>
    <signal>clicked()</signal>
-   <receiver>action1_Blue</receiver>
+   <receiver>action01</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1348,9 +1351,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_2_green</sender>
+   <sender>b_02</sender>
    <signal>clicked()</signal>
-   <receiver>action2_Green</receiver>
+   <receiver>action02</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1364,9 +1367,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_3_red</sender>
+   <sender>b_03</sender>
    <signal>clicked()</signal>
-   <receiver>action3_Red</receiver>
+   <receiver>action03</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1380,9 +1383,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_4_black</sender>
+   <sender>b_04</sender>
    <signal>clicked()</signal>
-   <receiver>action4_Black</receiver>
+   <receiver>action04</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1396,9 +1399,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_5_orange</sender>
+   <sender>b_05</sender>
    <signal>clicked()</signal>
-   <receiver>action5_Orange</receiver>
+   <receiver>action05</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1412,9 +1415,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_6_blue_light</sender>
+   <sender>b_06</sender>
    <signal>clicked()</signal>
-   <receiver>action6_Blue_Light</receiver>
+   <receiver>action06</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1428,9 +1431,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_7_green_light</sender>
+   <sender>b_07</sender>
    <signal>clicked()</signal>
-   <receiver>action7_Green_Light</receiver>
+   <receiver>action07</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1444,9 +1447,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_9_gray</sender>
+   <sender>b_09</sender>
    <signal>clicked()</signal>
-   <receiver>action9_Gray</receiver>
+   <receiver>action09</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1460,9 +1463,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_10_brown</sender>
+   <sender>b_10</sender>
    <signal>clicked()</signal>
-   <receiver>action10_Brown</receiver>
+   <receiver>action10</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1476,9 +1479,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>b_8_pig</sender>
+   <sender>b_08</sender>
    <signal>clicked()</signal>
-   <receiver>action8_Pig</receiver>
+   <receiver>action08</receiver>
    <slot>toggle()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1504,6 +1507,22 @@
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRescan</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>rescan_botton</receiver>
+   <slot>toggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1023</x>
+     <y>314</y>
     </hint>
    </hints>
   </connection>

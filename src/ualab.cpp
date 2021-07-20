@@ -65,6 +65,19 @@ ualab::ualab(QWidget *parent) :
     connect(m_ui->actionThis_Application, SIGNAL(triggered(bool)), this, SLOT(this_application()));
     connect(m_ui->actionRescan, SIGNAL(triggered(bool)), this, SLOT(rescan()));
     connect(m_ui->action_start_stop_getting_data, SIGNAL(triggered(bool)), this, SLOT(start_stop_handler()));
+
+    connect(m_ui->action01, SIGNAL(toggled(bool)), this, SLOT(change_state01()));
+    connect(m_ui->action02, SIGNAL(toggled(bool)), this, SLOT(change_state02()));
+    connect(m_ui->action03, SIGNAL(toggled(bool)), this, SLOT(change_state03()));
+    connect(m_ui->action04, SIGNAL(toggled(bool)), this, SLOT(change_state04()));
+    connect(m_ui->action05, SIGNAL(toggled(bool)), this, SLOT(change_state05()));
+    connect(m_ui->action06, SIGNAL(toggled(bool)), this, SLOT(change_state06()));
+    connect(m_ui->action07, SIGNAL(toggled(bool)), this, SLOT(change_state07()));
+    connect(m_ui->action08, SIGNAL(toggled(bool)), this, SLOT(change_state08()));
+    connect(m_ui->action09, SIGNAL(toggled(bool)), this, SLOT(change_state09()));
+    connect(m_ui->action10, SIGNAL(toggled(bool)), this, SLOT(change_state10()));
+
+
     rescan();
     start_stop_handler();
 }
@@ -100,8 +113,10 @@ void ualab::updatrgraph()
         }
         for(int i = 0; i < 10; i++)
         {
-//             if(m_ui->)
-            cruve[i]->setSamples(dataX, dataY[i], progressframes+1);
+            if(gstates[i])
+                cruve[i]->setSamples(dataX, dataY[i], progressframes+1);
+            else
+                cruve[i]->setSamples(0, 0, 0);
         }
     }
     else if(progressframes < INT_MAX/NUMBERFRAMES)
@@ -122,7 +137,10 @@ void ualab::updatrgraph()
         }
         for(int i = 0; i < 10; i++)
         {
-            cruve[i]->setSamples(dataX, dataY[i], NUMBERFRAMES);
+            if(gstates[i])
+                cruve[i]->setSamples(dataX, dataY[i], NUMBERFRAMES);
+            else
+                cruve[i]->setSamples(0, 0, 0);
         }
     }
     else
@@ -146,6 +164,59 @@ void ualab::start_stop_handler()
     tmr->setInterval(period);
     tmr->start();
 }
+
+void ualab::change_state01()
+{
+    gstates[0] = m_ui->action01->isChecked();
+}
+
+void ualab::change_state02()
+{
+    gstates[1] = m_ui->action02->isChecked();
+}
+
+void ualab::change_state03()
+{
+    gstates[2] = m_ui->action03->isChecked();
+}
+
+void ualab::change_state04()
+{
+    gstates[3] = m_ui->action04->isChecked();
+}
+
+void ualab::change_state05()
+{
+    gstates[4] = m_ui->action05->isChecked();
+}
+
+void ualab::change_state06()
+{
+    gstates[5] = m_ui->action06->isChecked();
+}
+
+void ualab::change_state07()
+{
+    gstates[6] = m_ui->action07->isChecked();
+}
+
+void ualab::change_state08()
+{
+    gstates[7] = m_ui->action08->isChecked();
+}
+
+void ualab::change_state09()
+{
+    gstates[8] = m_ui->action09->isChecked();
+}
+
+void ualab::change_state10()
+{
+    gstates[9] = m_ui->action10->isChecked();
+}
+
+
+
 
 
 

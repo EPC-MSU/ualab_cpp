@@ -34,6 +34,7 @@ public:
     int progressframes;
     double dataY[10][NUMBERFRAMES];
     double dataX[NUMBERFRAMES];
+    bool gstates[10] = {true, true, true, true, true, true, true, true, true, true};
 
 private:
     Ui::MainWindow *m_ui;
@@ -47,6 +48,20 @@ public slots:
     void rescan();
     void updatrgraph();
     void start_stop_handler();
+
+//     I am like China code))))0))0)
+//     Sorry, may be I will fix it.
+    void change_state01();
+    void change_state02();
+    void change_state03();
+    void change_state04();
+    void change_state05();
+    void change_state06();
+    void change_state07();
+    void change_state08();
+    void change_state09();
+    void change_state10();
+
 };
 
 #endif // UALAB_H
