@@ -1,7 +1,7 @@
-CMake Qt5 GUI Template
+CMake Qt5 Qwt GUI for usbadc10
 ----------------------
 
-You need Qt5 and CMake 2.8.11 or higher
+You need Qt5, Qwt and CMake 3.0 or higher
 
 -- Build instructions --
 
