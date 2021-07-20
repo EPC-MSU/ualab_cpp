@@ -652,7 +652,7 @@
       <item>
        <widget class="QComboBox" name="comboBox_ports">
         <property name="editable">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -831,17 +831,17 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionConnect"/>
-    <addaction name="actionDisconnect"/>
-    <addaction name="action_start_stop_getting_data"/>
+    <addaction name="action_connect"/>
+    <addaction name="action_disconnect"/>
+    <addaction name="action_start_stop"/>
     <addaction name="action_start_stop_recording"/>
-    <addaction name="actionRescan"/>
+    <addaction name="action_rescan"/>
    </widget>
    <widget class="QMenu" name="menuABOUT">
     <property name="title">
      <string>About</string>
     </property>
-    <addaction name="actionThis_Application"/>
+    <addaction name="action_this_application"/>
    </widget>
    <widget class="QMenu" name="menuVIEW">
     <property name="title">
@@ -869,7 +869,7 @@
    <addaction name="menuTOOLS"/>
    <addaction name="menuABOUT"/>
   </widget>
-  <action name="actionConnect">
+  <action name="action_connect">
    <property name="text">
     <string>Connect</string>
    </property>
@@ -877,7 +877,7 @@
     <string>Ctrl+K</string>
    </property>
   </action>
-  <action name="actionDisconnect">
+  <action name="action_disconnect">
    <property name="text">
     <string>Disconnect</string>
    </property>
@@ -885,7 +885,7 @@
     <string>Ctrl+D</string>
    </property>
   </action>
-  <action name="action_start_stop_getting_data">
+  <action name="action_start_stop">
    <property name="text">
     <string>Start/Stop getting data</string>
    </property>
@@ -914,7 +914,7 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionThis_Application">
+  <action name="action_this_application">
    <property name="text">
     <string>This Application</string>
    </property>
@@ -1059,7 +1059,7 @@
     <string>Ctrl+0</string>
    </property>
   </action>
-  <action name="actionRescan">
+  <action name="action_rescan">
    <property name="text">
     <string>Rescan</string>
    </property>
@@ -1273,7 +1273,7 @@
   <connection>
    <sender>start_stop</sender>
    <signal>clicked()</signal>
-   <receiver>action_start_stop_getting_data</receiver>
+   <receiver>action_start_stop</receiver>
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1305,7 +1305,7 @@
   <connection>
    <sender>connect_button</sender>
    <signal>clicked()</signal>
-   <receiver>actionConnect</receiver>
+   <receiver>action_connect</receiver>
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1321,7 +1321,7 @@
   <connection>
    <sender>disconnect_button</sender>
    <signal>clicked()</signal>
-   <receiver>actionDisconnect</receiver>
+   <receiver>action_disconnect</receiver>
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1497,7 +1497,7 @@
   <connection>
    <sender>rescan_botton</sender>
    <signal>clicked()</signal>
-   <receiver>actionRescan</receiver>
+   <receiver>action_rescan</receiver>
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1507,22 +1507,6 @@
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionRescan</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>rescan_botton</receiver>
-   <slot>toggle()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1023</x>
-     <y>314</y>
     </hint>
    </hints>
   </connection>

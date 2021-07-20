@@ -46,7 +46,7 @@ ualab::ualab(QWidget *parent) :
     m_ui->graphWidget->axisScaleEngine(QwtPlot::xBottom)->setAttribute(QwtScaleEngine::Floating, true);
     m_ui->graphWidget->replot();
 
-    double period_vals[] = {0.001, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 5, 10, 60, 300, 600};
+    int period_vals[] = {1, 10, 20, 50, 100, 200, 500, 1000, 5000, 10000, 60000, 300000, 600000};
     for(int i=0; i < 13; i++)
     {
         m_ui->comboBox_period_val->setItemData(i, period_vals[i]);
@@ -55,16 +55,18 @@ ualab::ualab(QWidget *parent) :
     m_ui->disconnect_button->setEnabled(false);
     m_ui->start_stop_recording->setEnabled(false);
     m_ui->start_stop->setEnabled(false);
-    m_ui->actionDisconnect->setEnabled(false);
+    m_ui->action_disconnect->setEnabled(false);
     m_ui->action_start_stop_recording->setEnabled(false);
-    m_ui->action_start_stop_getting_data->setEnabled(false);
+    m_ui->action_start_stop->setEnabled(false);
 
     tmr = new QTimer(this);
 
     connect(tmr, SIGNAL(timeout()), this, SLOT(updatrgraph()));
-    connect(m_ui->actionThis_Application, SIGNAL(triggered(bool)), this, SLOT(this_application()));
-    connect(m_ui->actionRescan, SIGNAL(triggered(bool)), this, SLOT(rescan()));
-    connect(m_ui->action_start_stop_getting_data, SIGNAL(triggered(bool)), this, SLOT(start_stop_handler()));
+    connect(m_ui->action_this_application, SIGNAL(triggered(bool)), this, SLOT(this_application()));
+    connect(m_ui->action_rescan, SIGNAL(triggered(bool)), this, SLOT(rescan()));
+    connect(m_ui->action_start_stop, SIGNAL(triggered(bool)), this, SLOT(start_stop_handler()));
+    connect(m_ui->action_connect, SIGNAL(triggered(bool)), this, SLOT(connection()));
+    connect(m_ui->action_disconnect, SIGNAL(triggered(bool)), this, SLOT(disconnection()));
 
     connect(m_ui->action01, SIGNAL(toggled(bool)), this, SLOT(change_state01()));
     connect(m_ui->action02, SIGNAL(toggled(bool)), this, SLOT(change_state02()));
@@ -79,10 +81,14 @@ ualab::ualab(QWidget *parent) :
 
 
     rescan();
-    start_stop_handler();
+//     start_stop_handler();
 }
 
-ualab::~ualab() = default;
+ualab::~ualab()
+{
+    usbadc10_close_device(&ualab_device);
+    delete m_ui;
+}
 
 
 void ualab::this_application()
@@ -151,19 +157,74 @@ void ualab::updatrgraph()
 
 void ualab::start_stop_handler()
 {
-    for(int i = 0; i < NUMBERFRAMES; i++)
+    int period = m_ui->comboBox_period_val->currentData().toInt();
+    if(!start_stop_status)
     {
-        dataX[i] = 0;
-        for(int j = 0; j < 10; j++)
+        for(int i = 0; i < NUMBERFRAMES; i++)
         {
-            dataY[j][i] = 0;
+            dataX[i] = 0;
+            for(int j = 0; j < 10; j++)
+            {
+                dataY[j][i] = 0;
+            }
         }
+        progressframes = 0;
+        start_stop_status = true;
+        tmr->setInterval(period);
+        tmr->start();
     }
-    progressframes = 0;
-    int period = NUMBERFRAMES * m_ui->comboBox_period_val->currentData().toInt();
-    tmr->setInterval(period);
-    tmr->start();
+    else
+    {
+        start_stop_status = false;
+        tmr->stop();
+    }
 }
+void ualab::connection()
+{
+    usbadc10_close_device(&ualab_device);
+
+    #ifdef Q_OS_WIN32
+    QString devisename = "com:\\\\.\\" + m_ui->comboBox_ports->currentText();
+    #else
+        #ifdef Q_OS_LINUX
+    QString ualab_devicename = "com:///dev/" + m_ui->comboBox_ports->currentText();
+        #endif
+    #endif
+
+    ualab_device = usbadc10_open_device(ualab_devicename.toStdString().c_str());
+
+    if(ualab_device == device_undefined)
+    {
+        QMessageBox msbox;
+        msbox.setText(m_ui->comboBox_ports->currentText() + " is not correct device.");
+        msbox.exec();
+    }
+    else
+    {
+        m_ui->action_disconnect->setEnabled(true);
+        m_ui->action_rescan->setEnabled(false);
+        m_ui->action_start_stop->setEnabled(true);
+        m_ui->action_connect->setEnabled(false);
+        m_ui->start_stop->setEnabled(true);
+        m_ui->rescan_botton->setEnabled(false);
+        m_ui->disconnect_button->setEnabled(true);
+        m_ui->connect_button->setEnabled(false);
+    }
+}
+
+void ualab::disconnection()
+{
+    usbadc10_close_device(&ualab_device);
+    m_ui->action_disconnect->setEnabled(false);
+    m_ui->action_rescan->setEnabled(true);
+    m_ui->action_start_stop->setEnabled(false);
+    m_ui->action_connect->setEnabled(true);
+    m_ui->start_stop->setEnabled(false);
+    m_ui->rescan_botton->setEnabled(true);
+    m_ui->disconnect_button->setEnabled(false);
+    m_ui->connect_button->setEnabled(true);
+}
+
 
 void ualab::change_state01()
 {

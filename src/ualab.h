@@ -14,6 +14,8 @@
 #include <qwt_plot_picker.h>
 #include <qwt_symbol.h>
 
+#include "usbadc10.h"
+
 #define NUMBERFRAMES 1000
 
 namespace Ui {
@@ -26,7 +28,7 @@ class ualab : public QMainWindow
 
 public:
     explicit ualab(QWidget *parent = nullptr);
-    ~ualab() override;
+    ~ualab();
     const QList<QColor> graphcolor = {QColor(0, 0, 255), QColor(0, 170, 0),     QColor(255, 0, 0),
                                       QColor(0, 0, 0),   QColor(255, 85, 0),    QColor(0, 170, 255),
                                       QColor(0, 255, 0), QColor(255, 170, 255), QColor(111, 111, 111),
@@ -35,6 +37,7 @@ public:
     double dataY[10][NUMBERFRAMES];
     double dataX[NUMBERFRAMES];
     bool gstates[10] = {true, true, true, true, true, true, true, true, true, true};
+    bool start_stop_status = false;
 
 private:
     Ui::MainWindow *m_ui;
@@ -42,12 +45,15 @@ private:
     QwtPlotGrid *grid;
     QwtPlotCurve *cruve[10];
     QSerialPortInfo *serial;
+    device_t ualab_device;
 
 public slots:
     void this_application();
     void rescan();
     void updatrgraph();
     void start_stop_handler();
+    void connection();
+    void disconnection();
 
 //     I am like China code))))0))0)
 //     Sorry, may be I will fix it.
