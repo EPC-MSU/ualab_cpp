@@ -52,11 +52,11 @@ ualab::ualab(QWidget *parent) :
         m_ui->comboBox_period_val->setItemData(i, period_vals[i]);
     }
 
-    m_ui->disconnect_button->setEnabled(false);
-    m_ui->start_stop_recording->setEnabled(false);
-    m_ui->start_stop->setEnabled(false);
+    m_ui->button_disconnect->setEnabled(false);
     m_ui->action_disconnect->setEnabled(false);
+    m_ui->button_start_stop_recording->setEnabled(false);
     m_ui->action_start_stop_recording->setEnabled(false);
+    m_ui->button_start_stop->setEnabled(false);
     m_ui->action_start_stop->setEnabled(false);
 
     tmr = new QTimer(this);
@@ -67,6 +67,10 @@ ualab::ualab(QWidget *parent) :
     connect(m_ui->action_start_stop, SIGNAL(triggered(bool)), this, SLOT(start_stop_handler()));
     connect(m_ui->action_connect, SIGNAL(triggered(bool)), this, SLOT(connection()));
     connect(m_ui->action_disconnect, SIGNAL(triggered(bool)), this, SLOT(disconnection()));
+    connect(m_ui->action_save, SIGNAL(triggered(bool)), this, SLOT(save_handler()));
+    connect(m_ui->action_start_stop_recording, SIGNAL(triggered(bool)), this, SLOT(start_stop_recording_handler()));
+
+    connect(m_ui->comboBox_period_val, SIGNAL(activated(int)), this, SLOT(change_period()));
 
     connect(m_ui->action01, SIGNAL(toggled(bool)), this, SLOT(change_state01()));
     connect(m_ui->action02, SIGNAL(toggled(bool)), this, SLOT(change_state02()));
@@ -79,9 +83,7 @@ ualab::ualab(QWidget *parent) :
     connect(m_ui->action09, SIGNAL(toggled(bool)), this, SLOT(change_state09()));
     connect(m_ui->action10, SIGNAL(toggled(bool)), this, SLOT(change_state10()));
 
-
     rescan();
-//     start_stop_handler();
 }
 
 ualab::~ualab()
@@ -94,7 +96,10 @@ ualab::~ualab()
 void ualab::this_application()
 {
     QMessageBox msbox;
-    msbox.setText("This is a simple cross-platform application for the usbadc10 device.\nVersion dev\nCopyright © 2021 Nikita Presnov\npresnovnikita@yandex.ru");
+    msbox.setWindowTitle("About");
+    msbox.setStandardButtons(QMessageBox::Ok);
+    msbox.setDefaultButton(QMessageBox::Ok);
+    msbox.setText("This is a simple cross-platform application for the usbadc10 device.\nCopyright © 2021 Nikita Presnov\npresnovnikita@yandex.ru");
     msbox.exec();
 }
 
@@ -158,6 +163,9 @@ void ualab::updatrgraph()
 void ualab::start_stop_handler()
 {
     int period = m_ui->comboBox_period_val->currentData().toInt();
+    start_stop_recording_status = false;
+    m_ui->status_recording->setPixmap(QPixmap(QString::fromUtf8("../record_green.svg")));
+
     if(!start_stop_status)
     {
         for(int i = 0; i < NUMBERFRAMES; i++)
@@ -170,11 +178,17 @@ void ualab::start_stop_handler()
         }
         progressframes = 0;
         start_stop_status = true;
+        m_ui->action_start_stop_recording->setEnabled(true);
+        m_ui->button_start_stop_recording->setEnabled(true);
         tmr->setInterval(period);
         tmr->start();
     }
     else
     {
+        m_ui->action_save->setEnabled(true);
+        m_ui->button_save->setEnabled(true);
+        m_ui->action_start_stop_recording->setEnabled(false);
+        m_ui->button_start_stop_recording->setEnabled(false);
         start_stop_status = false;
         tmr->stop();
     }
@@ -193,38 +207,119 @@ void ualab::connection()
 
     ualab_device = usbadc10_open_device(ualab_devicename.toStdString().c_str());
 
+
     if(ualab_device == device_undefined)
     {
         QMessageBox msbox;
-        msbox.setText(m_ui->comboBox_ports->currentText() + " is not correct device.");
+        if(m_ui->comboBox_ports->count() == 0)
+        {
+
+            msbox.setWindowTitle("UALab");
+            msbox.setText("No avalible device.");
+        }
+        else
+        {
+            msbox.setWindowTitle("UALab");
+            msbox.setText(m_ui->comboBox_ports->currentText() + " is not correct device.");
+        }
         msbox.exec();
+        rescan();
     }
     else
     {
         m_ui->action_disconnect->setEnabled(true);
+        m_ui->button_disconnect->setEnabled(true);
         m_ui->action_rescan->setEnabled(false);
+        m_ui->button_rescan->setEnabled(false);
         m_ui->action_start_stop->setEnabled(true);
+        m_ui->button_start_stop->setEnabled(true);
         m_ui->action_connect->setEnabled(false);
-        m_ui->start_stop->setEnabled(true);
-        m_ui->rescan_botton->setEnabled(false);
-        m_ui->disconnect_button->setEnabled(true);
-        m_ui->connect_button->setEnabled(false);
+        m_ui->button_connect->setEnabled(false);
     }
 }
 
 void ualab::disconnection()
 {
     usbadc10_close_device(&ualab_device);
+
+    m_ui->status_recording->setPixmap(QPixmap(QString::fromUtf8("../record_green.svg")));
+
     m_ui->action_disconnect->setEnabled(false);
+    m_ui->button_disconnect->setEnabled(false);
     m_ui->action_rescan->setEnabled(true);
+    m_ui->button_rescan->setEnabled(true);
     m_ui->action_start_stop->setEnabled(false);
+    m_ui->button_start_stop->setEnabled(false);
     m_ui->action_connect->setEnabled(true);
-    m_ui->start_stop->setEnabled(false);
-    m_ui->rescan_botton->setEnabled(true);
-    m_ui->disconnect_button->setEnabled(false);
-    m_ui->connect_button->setEnabled(true);
+    m_ui->button_connect->setEnabled(true);
+    m_ui->action_save->setEnabled(true);
+    m_ui->button_save->setEnabled(true);
+    m_ui->action_start_stop_recording->setEnabled(false);
+    m_ui->button_start_stop_recording->setEnabled(false);
+    m_ui->action_save->setEnabled(true);
+    m_ui->button_save->setEnabled(true);
+
+    start_stop_status = false;
+    start_stop_recording_status = false;
+    tmr->stop();
+
+    rescan();
 }
 
+void ualab::change_period()
+{
+    start_stop_status = !start_stop_status;
+    start_stop_recording_status = false;
+    m_ui->action_save->setEnabled(true);
+    m_ui->button_save->setEnabled(true);
+    start_stop_handler();
+}
+
+void ualab::save_handler()
+{
+//     QString local_filename =
+    filename = QFileDialog::getSaveFileName(this,
+                                            tr("Save File"),
+                                            QDateTime::currentDateTime().toString("dd-MM-yyyy_HH-mm-ss"),// + ".csv",
+                                            tr("CSV Files (*.csv)"));
+    outputfile.setFileName(filename);
+    if(!outputfile.open(QIODevice::WriteOnly))
+    {
+        QMessageBox msbox;
+        msbox.setWindowTitle("UALab");
+        msbox.setText("Error while touch file. No directory.");
+        msbox.exec();
+    }
+    else
+    {
+        outputfile.write("Time, s\t");
+        QTextStream outdata (&outputfile);
+
+        for(int i = 0; i < 10; i++)
+        {
+            outdata << "ADC" << i+1 << '\t';
+        }
+        outputfile.close();
+    }
+}
+
+void ualab::start_stop_recording_handler()
+{
+    start_stop_recording_status = !start_stop_recording_status;
+    if(start_stop_recording_status)
+    {
+        m_ui->status_recording->setPixmap(QPixmap(QString::fromUtf8("../record_red.svg")));
+        m_ui->action_save->setEnabled(false);
+        m_ui->button_save->setEnabled(false);
+    }
+    else
+    {
+        m_ui->status_recording->setPixmap(QPixmap(QString::fromUtf8("../record_green.svg")));
+        m_ui->action_save->setEnabled(true);
+        m_ui->button_save->setEnabled(true);
+    }
+
+}
 
 void ualab::change_state01()
 {

@@ -550,7 +550,7 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QPushButton" name="start_stop">
+       <widget class="QPushButton" name="button_start_stop">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
           <horstretch>0</horstretch>
@@ -565,7 +565,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QPushButton" name="start_stop_recording">
+         <widget class="QPushButton" name="button_start_stop_recording">
           <property name="text">
            <string>Start/stop recording</string>
           </property>
@@ -623,7 +623,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="save_button">
+       <widget class="QPushButton" name="button_save">
         <property name="text">
          <string>Save</string>
         </property>
@@ -659,14 +659,14 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QPushButton" name="connect_button">
+         <widget class="QPushButton" name="button_connect">
           <property name="text">
            <string>Connect</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="disconnect_button">
+         <widget class="QPushButton" name="button_disconnect">
           <property name="text">
            <string>Disconnect</string>
           </property>
@@ -675,7 +675,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="rescan_botton">
+       <widget class="QPushButton" name="button_rescan">
         <property name="text">
          <string>Rescan</string>
         </property>
@@ -823,9 +823,9 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionSave"/>
+    <addaction name="action_save"/>
     <addaction name="separator"/>
-    <addaction name="actionOut"/>
+    <addaction name="action_out"/>
    </widget>
    <widget class="QMenu" name="menuTOOLS">
     <property name="title">
@@ -847,7 +847,7 @@
     <property name="title">
      <string>View</string>
     </property>
-    <widget class="QMenu" name="menuChannels_2">
+    <widget class="QMenu" name="menuChannels">
      <property name="title">
       <string>Channels</string>
      </property>
@@ -862,7 +862,7 @@
      <addaction name="action09"/>
      <addaction name="action10"/>
     </widget>
-    <addaction name="menuChannels_2"/>
+    <addaction name="menuChannels"/>
    </widget>
    <addaction name="menuFILE"/>
    <addaction name="menuVIEW"/>
@@ -898,7 +898,7 @@
     <string>Space</string>
    </property>
   </action>
-  <action name="actionSave">
+  <action name="action_save">
    <property name="text">
     <string>Save ...</string>
    </property>
@@ -906,7 +906,7 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionOut">
+  <action name="action_out">
    <property name="text">
     <string>Exit</string>
    </property>
@@ -1079,7 +1079,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>actionOut</sender>
+   <sender>action_out</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -1255,9 +1255,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>save_button</sender>
+   <sender>button_save</sender>
    <signal>clicked()</signal>
-   <receiver>actionSave</receiver>
+   <receiver>action_save</receiver>
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1265,13 +1265,13 @@
      <y>161</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1151</x>
-     <y>234</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>start_stop</sender>
+   <sender>button_start_stop</sender>
    <signal>clicked()</signal>
    <receiver>action_start_stop</receiver>
    <slot>trigger()</slot>
@@ -1281,13 +1281,13 @@
      <y>53</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1151</x>
-     <y>111</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>start_stop_recording</sender>
+   <sender>button_start_stop_recording</sender>
    <signal>clicked()</signal>
    <receiver>action_start_stop_recording</receiver>
    <slot>trigger()</slot>
@@ -1297,13 +1297,13 @@
      <y>94</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1151</x>
-     <y>150</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>connect_button</sender>
+   <sender>button_connect</sender>
    <signal>clicked()</signal>
    <receiver>action_connect</receiver>
    <slot>trigger()</slot>
@@ -1313,13 +1313,13 @@
      <y>273</y>
     </hint>
     <hint type="destinationlabel">
-     <x>864</x>
-     <y>343</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>disconnect_button</sender>
+   <sender>button_disconnect</sender>
    <signal>clicked()</signal>
    <receiver>action_disconnect</receiver>
    <slot>trigger()</slot>
@@ -1329,8 +1329,8 @@
      <y>273</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1150</x>
-     <y>343</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
@@ -1495,7 +1495,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>rescan_botton</sender>
+   <sender>button_rescan</sender>
    <signal>clicked()</signal>
    <receiver>action_rescan</receiver>
    <slot>trigger()</slot>

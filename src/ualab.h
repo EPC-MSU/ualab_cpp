@@ -38,6 +38,7 @@ public:
     double dataX[NUMBERFRAMES];
     bool gstates[10] = {true, true, true, true, true, true, true, true, true, true};
     bool start_stop_status = false;
+    bool start_stop_recording_status = false;
 
 private:
     Ui::MainWindow *m_ui;
@@ -46,14 +47,19 @@ private:
     QwtPlotCurve *cruve[10];
     QSerialPortInfo *serial;
     device_t ualab_device;
+    QFile outputfile;
+    QString filename;
 
 public slots:
     void this_application();
     void rescan();
     void updatrgraph();
     void start_stop_handler();
+    void start_stop_recording_handler();
     void connection();
     void disconnection();
+    void change_period();
+    void save_handler();
 
 //     I am like China code))))0))0)
 //     Sorry, may be I will fix it.
