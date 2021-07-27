@@ -18,6 +18,8 @@
 
 #define NUMBERFRAMES 1000
 
+using namespace std::chrono;
+
 namespace Ui {
 class MainWindow;
 }
@@ -39,8 +41,12 @@ public:
     bool gstates[10] = {true, true, true, true, true, true, true, true, true, true};
     bool start_stop_status = false;
     bool start_stop_recording_status = false;
+    void reset();
+    double elapsed() const;
 
 private:
+    using clock_t = std::chrono::steady_clock;
+	using second_t = std::chrono::duration<double, std::ratio<1> >;
     Ui::MainWindow *m_ui;
     QTimer *tmr;
     QwtPlotGrid *grid;
@@ -49,6 +55,8 @@ private:
     device_t ualab_device;
     QFile outputfile;
     QString filename;
+    usbadc10_get_conversion_t ualab_data;
+    std::chrono::time_point<clock_t> start;
 
 public slots:
     void this_application();

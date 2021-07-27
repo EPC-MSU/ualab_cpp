@@ -13,10 +13,11 @@ include(FindQwt.cmake)
 find_package(Qt5 CONFIG REQUIRED Core Widgets Gui SerialPort)
 
 #Link to usbadc10
-if(${CMAKE_SYSTEM} MATCHES "Linux")
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     message ("Linux")
     link_directories(${CMAKE_SOURCE_DIR}/usbadc10-debian)
-elseif(WIN32)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    message ("Windows")
     link_directories(${CMAKE_SOURCE_DIR}/usbadc10-win64)
 else()
     message ("Usuported system")
@@ -29,7 +30,8 @@ set(ualab_SRC
 
 # Tell CMake to create the executable
 add_executable(ualab ${ualab_SRC})
-#qt5_use_modules(ualab Core Widgets Gui SerialPort)
+# Comile optons
+# target_compile_features(ualab cxx_std_11)
 # Use the Widgets module from Qt 5.
 target_link_libraries(ualab Qt5::Widgets Qt5::SerialPort Qwt::Qwt usbadc10)
 

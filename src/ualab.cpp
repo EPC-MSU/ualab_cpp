@@ -1,12 +1,16 @@
-#include "ualab.h"
-#include "ui_ualab.h"
 #include <QFileDialog>
 #include <QTime>
 #include <QMessageBox>
 #include <qwt_picker_machine.h>
 #include <qwt_scale_engine.h>
+
+#include <iostream>
+#include <chrono>
 #include <math.h>
 #include <limits.h>
+
+#include "ualab.h"
+#include "ui_ualab.h"
 
 ualab::ualab(QWidget *parent) :
     QMainWindow(parent),
@@ -70,6 +74,8 @@ ualab::ualab(QWidget *parent) :
     connect(m_ui->action_save, SIGNAL(triggered(bool)), this, SLOT(save_handler()));
     connect(m_ui->action_start_stop_recording, SIGNAL(triggered(bool)), this, SLOT(start_stop_recording_handler()));
 
+//     connect(m_ui->action_out, SIGNAL(triggered(bool)), this, SLOT(disconnection()));
+
     connect(m_ui->comboBox_period_val, SIGNAL(activated(int)), this, SLOT(change_period()));
 
     connect(m_ui->action01, SIGNAL(toggled(bool)), this, SLOT(change_state01()));
@@ -85,6 +91,17 @@ ualab::ualab(QWidget *parent) :
 
     rescan();
 }
+
+void ualab::reset()
+{
+    start = clock_t::now();
+}
+
+double ualab::elapsed() const
+{
+    return std::chrono::duration_cast<second_t>(clock_t::now() - start).count();
+}
+
 
 ualab::~ualab()
 {
@@ -117,10 +134,12 @@ void ualab::updatrgraph()
 {
     if(progressframes < NUMBERFRAMES)
     {
-        dataX[progressframes] = progressframes;
+        if(progressframes==0)reset();
+        dataX[progressframes] = elapsed();
+        usbadc10_get_conversion(ualab_device, &ualab_data);
         for(int j = 0; j < 10; j++)
         {
-            dataY[j][progressframes] = sin((float)progressframes / 100 + (float)j / 20) + 1.5;
+            dataY[j][progressframes] = (double)ualab_data.data[j] / 10000; //sin((float)progressframes / 100 + (float)j / 20) + 1.5;
         }
         for(int i = 0; i < 10; i++)
         {
@@ -136,7 +155,8 @@ void ualab::updatrgraph()
         {
             dataX[i] = dataX[i+1];
         }
-        dataX[NUMBERFRAMES-1] = progressframes;
+        dataX[NUMBERFRAMES-1] = elapsed();
+        usbadc10_get_conversion(ualab_device, &ualab_data);
 
         for(int j = 0; j < 10; j++)
         {
@@ -144,7 +164,7 @@ void ualab::updatrgraph()
             {
                 dataY[j][i] = dataY[j][i+1];
             }
-            dataY[j][NUMBERFRAMES-1] = sin((float)progressframes / 100 + (float)j / 20) + 1.5;
+            dataY[j][NUMBERFRAMES-1] = (double)ualab_data.data[j] / 10000; //sin((float)progressframes / 100 + (float)j / 20) + 1.5;
         }
         for(int i = 0; i < 10; i++)
         {
