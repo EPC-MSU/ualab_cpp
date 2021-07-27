@@ -11,7 +11,7 @@
 #include "ualab.h"
 #include "ui_ualab.h"
 
-ualab::ualab(QWidget *parent) :
+UALab::UALab (QWidget *parent) :
     QMainWindow(parent),
     m_ui(new Ui::MainWindow)
 {
@@ -75,6 +75,9 @@ ualab::ualab(QWidget *parent) :
 
     connect(m_ui->comboBox_period_val, SIGNAL(activated(int)), this, SLOT(change_period()));
 
+    connect(&thread_data, &QThread::started, &dataupdaerobj, &DataUpdater::updatedata);
+    connect(&dataupdaerobj, &DataUpdater::finished, &thread_data, &QThread::terminate);
+
     connect(m_ui->action01, SIGNAL(toggled(bool)), this, SLOT(change_state01()));
     connect(m_ui->action02, SIGNAL(toggled(bool)), this, SLOT(change_state02()));
     connect(m_ui->action03, SIGNAL(toggled(bool)), this, SLOT(change_state03()));
@@ -86,28 +89,30 @@ ualab::ualab(QWidget *parent) :
     connect(m_ui->action09, SIGNAL(toggled(bool)), this, SLOT(change_state09()));
     connect(m_ui->action10, SIGNAL(toggled(bool)), this, SLOT(change_state10()));
 
+    dataupdaerobj.moveToThread(&thread_data);
+
     rescan();
 }
 
-void ualab::reset()
+void UALab::reset()
 {
     start = clock_t::now();
 }
 
-double ualab::elapsed() const
+double UALab::elapsed() const
 {
     return std::chrono::duration_cast<second_t>(clock_t::now() - start).count();
 }
 
 
-ualab::~ualab()
+UALab::~UALab()
 {
     usbadc10_close_device(&ualab_device);
     delete m_ui;
 }
 
 
-void ualab::this_application()
+void UALab::this_application()
 {
     QMessageBox msbox;
     msbox.setWindowTitle("About");
@@ -117,7 +122,7 @@ void ualab::this_application()
     msbox.exec();
 }
 
-void ualab::rescan()
+void UALab::rescan()
 {
     m_ui->comboBox_ports->clear();
     const auto infos = QSerialPortInfo::availablePorts();
@@ -127,7 +132,7 @@ void ualab::rescan()
     }
 }
 
-void ualab::updategraph()
+void UALab::updategraph()
 {
     if(progressframes < NUMBERFRAMES)
     {
@@ -187,7 +192,7 @@ void ualab::updategraph()
     m_ui->graphWidget->replot();
 }
 
-void ualab::start_stop_handler()
+void UALab::start_stop_handler()
 {
     int period = m_ui->comboBox_period_val->currentData().toInt();
     start_stop_recording_status = false;
@@ -205,6 +210,8 @@ void ualab::start_stop_handler()
         }
         progressframes = 0;
         start_stop_status = true;
+        dataupdaerobj.setRunning(true);
+        thread_data.start();
         m_ui->action_start_stop_recording->setEnabled(true);
         m_ui->button_start_stop_recording->setEnabled(true);
         tmr->setInterval(period);
@@ -217,10 +224,11 @@ void ualab::start_stop_handler()
         m_ui->action_start_stop_recording->setEnabled(false);
         m_ui->button_start_stop_recording->setEnabled(false);
         start_stop_status = false;
+        dataupdaerobj.setRunning(false);
         tmr->stop();
     }
 }
-void ualab::connection()
+void UALab::connection()
 {
     usbadc10_close_device(&ualab_device);
 
@@ -265,7 +273,7 @@ void ualab::connection()
     }
 }
 
-void ualab::disconnection()
+void UALab::disconnection()
 {
     usbadc10_close_device(&ualab_device);
 
@@ -287,24 +295,25 @@ void ualab::disconnection()
     m_ui->button_save->setEnabled(true);
 
     start_stop_status = false;
+    dataupdaerobj.setRunning(false);
     start_stop_recording_status = false;
     tmr->stop();
 
     rescan();
 }
 
-void ualab::change_period()
+void UALab::change_period()
 {
     start_stop_status = !start_stop_status;
+    dataupdaerobj.setRunning(false);
     start_stop_recording_status = false;
     m_ui->action_save->setEnabled(true);
     m_ui->button_save->setEnabled(true);
     start_stop_handler();
 }
 
-void ualab::save_handler()
+void UALab::save_handler()
 {
-//     QString local_filename =
     filename = QFileDialog::getSaveFileName(this,
                                             tr("Save File"),
                                             QDateTime::currentDateTime().toString("dd-MM-yyyy_HH-mm-ss"),// + ".csv",
@@ -340,7 +349,7 @@ void ualab::save_handler()
     }
 }
 
-void ualab::start_stop_recording_handler()
+void UALab::start_stop_recording_handler()
 {
     start_stop_recording_status = !start_stop_recording_status;
     if(start_stop_recording_status)
@@ -358,52 +367,52 @@ void ualab::start_stop_recording_handler()
 
 }
 
-void ualab::change_state01()
+void UALab::change_state01()
 {
     gstates[0] = m_ui->action01->isChecked();
 }
 
-void ualab::change_state02()
+void UALab::change_state02()
 {
     gstates[1] = m_ui->action02->isChecked();
 }
 
-void ualab::change_state03()
+void UALab::change_state03()
 {
     gstates[2] = m_ui->action03->isChecked();
 }
 
-void ualab::change_state04()
+void UALab::change_state04()
 {
     gstates[3] = m_ui->action04->isChecked();
 }
 
-void ualab::change_state05()
+void UALab::change_state05()
 {
     gstates[4] = m_ui->action05->isChecked();
 }
 
-void ualab::change_state06()
+void UALab::change_state06()
 {
     gstates[5] = m_ui->action06->isChecked();
 }
 
-void ualab::change_state07()
+void UALab::change_state07()
 {
     gstates[6] = m_ui->action07->isChecked();
 }
 
-void ualab::change_state08()
+void UALab::change_state08()
 {
     gstates[7] = m_ui->action08->isChecked();
 }
 
-void ualab::change_state09()
+void UALab::change_state09()
 {
     gstates[8] = m_ui->action09->isChecked();
 }
 
-void ualab::change_state10()
+void UALab::change_state10()
 {
     gstates[9] = m_ui->action10->isChecked();
 }

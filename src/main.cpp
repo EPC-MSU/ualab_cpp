@@ -4,10 +4,9 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    ualab w;
+    UALab w;
     w.setWindowTitle(w.windowTitle() + " " + VERSION);
     w.show();
-
     return app.exec();
 //     w.disconnection();
 }

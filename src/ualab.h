@@ -2,11 +2,13 @@
 #define UALAB_H
 
 #include <QMainWindow>
+#include <QThread>
 #include <QString>
 #include <QTimer>
 #include <QFile>
 #include <QList>
 #include <QColor>
+#include <QObject>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 
@@ -17,22 +19,26 @@
 
 #include <vector>
 
+#include <QDebug>
+
 #include "usbadc10.h"
+#include "dataupdater.h"
 
 #define VERSION "dev"
 #define NUMBERFRAMES 1000
+
 
 namespace Ui {
 class MainWindow;
 }
 
-class ualab : public QMainWindow
+class UALab : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ualab(QWidget *parent = nullptr);
-    ~ualab();
+    explicit UALab (QWidget *parent = nullptr);
+    ~UALab();
     const QList<QColor> graphcolor = {QColor(0, 0, 255), QColor(0, 170, 0),     QColor(255, 0, 0),
                                       QColor(0, 0, 0),   QColor(255, 85, 0),    QColor(0, 170, 255),
                                       QColor(0, 255, 0), QColor(255, 170, 255), QColor(111, 111, 111),
@@ -60,6 +66,8 @@ private:
     QString filename;
     usbadc10_get_conversion_t ualab_data;
     std::chrono::time_point<clock_t> start;
+    QThread thread_data;
+    DataUpdater dataupdaerobj;
 
 public slots:
     void this_application();
