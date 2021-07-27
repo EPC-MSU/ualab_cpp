@@ -9,17 +9,18 @@
 #include <QColor>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
+
 #include <qwt_plot_curve.h>
 #include <qwt_plot_grid.h>
 #include <qwt_plot_picker.h>
 #include <qwt_symbol.h>
 
+#include <vector>
+
 #include "usbadc10.h"
 
 #define VERSION "dev"
 #define NUMBERFRAMES 1000
-
-// using namespace std::chrono;
 
 namespace Ui {
 class MainWindow;
@@ -44,6 +45,7 @@ public:
     bool start_stop_recording_status = false;
     void reset();
     double elapsed() const;
+    std::vector<std::vector<double>> record_data;
 
 private:
     using clock_t = std::chrono::steady_clock;
@@ -62,7 +64,7 @@ private:
 public slots:
     void this_application();
     void rescan();
-    void updatrgraph();
+    void updategraph();
     void start_stop_handler();
     void start_stop_recording_handler();
     void connection();

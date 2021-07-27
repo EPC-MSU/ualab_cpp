@@ -64,7 +64,7 @@ ualab::ualab(QWidget *parent) :
 
     tmr = new QTimer(this);
 
-    connect(tmr, SIGNAL(timeout()), this, SLOT(updatrgraph()));
+    connect(tmr, SIGNAL(timeout()), this, SLOT(updategraph()));
     connect(m_ui->action_this_application, SIGNAL(triggered(bool)), this, SLOT(this_application()));
     connect(m_ui->action_rescan, SIGNAL(triggered(bool)), this, SLOT(rescan()));
     connect(m_ui->action_start_stop, SIGNAL(triggered(bool)), this, SLOT(start_stop_handler()));
@@ -72,8 +72,6 @@ ualab::ualab(QWidget *parent) :
     connect(m_ui->action_disconnect, SIGNAL(triggered(bool)), this, SLOT(disconnection()));
     connect(m_ui->action_save, SIGNAL(triggered(bool)), this, SLOT(save_handler()));
     connect(m_ui->action_start_stop_recording, SIGNAL(triggered(bool)), this, SLOT(start_stop_recording_handler()));
-
-//     connect(m_ui->action_out, SIGNAL(triggered(bool)), this, SLOT(disconnection()));
 
     connect(m_ui->comboBox_period_val, SIGNAL(activated(int)), this, SLOT(change_period()));
 
@@ -129,26 +127,29 @@ void ualab::rescan()
     }
 }
 
-void ualab::updatrgraph()
+void ualab::updategraph()
 {
     if(progressframes < NUMBERFRAMES)
     {
         if(progressframes==0)reset();
         dataX[progressframes] = elapsed();
         usbadc10_get_conversion(ualab_device, &ualab_data);
+        if(start_stop_recording_status)
+        {
+            record_data.push_back(std::vector <double>());
+            record_data.back().push_back(dataX[progressframes]);
+        }
         for(int j = 0; j < 10; j++)
         {
-            dataY[j][progressframes] = (double)ualab_data.data[j] / 10000; //sin((float)progressframes / 100 + (float)j / 20) + 1.5;
+            dataY[j][progressframes] = (double)ualab_data.data[j] / 10000;
+            if(start_stop_recording_status)
+            {
+                record_data.back().push_back(dataY[j][progressframes]);
+            }
         }
-        for(int i = 0; i < 10; i++)
-        {
-            if(gstates[i])
-                cruve[i]->setSamples(dataX, dataY[i], progressframes+1);
-            else
-                cruve[i]->setSamples(0, 0, 0);
-        }
+        progressframes++;
     }
-    else if(progressframes < INT_MAX/NUMBERFRAMES)
+    else
     {
         for(int i = 0; i < NUMBERFRAMES-1; i++)
         {
@@ -157,25 +158,32 @@ void ualab::updatrgraph()
         dataX[NUMBERFRAMES-1] = elapsed();
         usbadc10_get_conversion(ualab_device, &ualab_data);
 
+        if(start_stop_recording_status)
+        {
+            record_data.push_back(std::vector <double>());
+            record_data.back().push_back(dataX[NUMBERFRAMES-1]);
+        }
         for(int j = 0; j < 10; j++)
         {
             for(int i = 0; i < NUMBERFRAMES-1; i++)
             {
                 dataY[j][i] = dataY[j][i+1];
             }
-            dataY[j][NUMBERFRAMES-1] = (double)ualab_data.data[j] / 10000; //sin((float)progressframes / 100 + (float)j / 20) + 1.5;
-        }
-        for(int i = 0; i < 10; i++)
-        {
-            if(gstates[i])
-                cruve[i]->setSamples(dataX, dataY[i], NUMBERFRAMES);
-            else
-                cruve[i]->setSamples(0, 0, 0);
+            dataY[j][NUMBERFRAMES-1] = (double)ualab_data.data[j] / 10000;
+            if(start_stop_recording_status)
+            {
+                record_data.back().push_back(dataY[j][progressframes]);
+            }
         }
     }
-    else
-        progressframes = 0;
-    progressframes++;
+
+    for(int i = 0; i < 10; i++)
+    {
+        if(gstates[i])
+            cruve[i]->setSamples(dataX, dataY[i], progressframes);
+        else
+            cruve[i]->setSamples(0, 0, 0);
+    }
     m_ui->graphWidget->replot();
 }
 
@@ -317,6 +325,16 @@ void ualab::save_handler()
         for(int i = 0; i < 10; i++)
         {
             outdata << "ADC" << i+1 << '\t';
+        }
+        outdata << '\n';
+        for(;!record_data.empty();record_data.erase(record_data.begin()))
+        {
+            outdata << record_data.front().at(0) << '\t';
+            for(int i = 0; i < 10; i++)
+            {
+                outdata << record_data.front().at(i+1) << '\t';
+            }
+            outdata << '\n';
         }
         outputfile.close();
     }

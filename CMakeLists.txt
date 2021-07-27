@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(ualab)
+project(UALab)
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -23,17 +23,24 @@ else()
     message ("Usuported system")
 endif()
 
-set(ualab_SRC
+set(UALab_HDR
+  src/ualab.h
+  src/usbadc10.h
+  src/dataupdater.h
+)
+
+set(UALab_SRC
   src/main.cpp
   src/ualab.cpp
+  src/dataupdater.cpp
 )
 
 # Tell CMake to create the executable
-add_executable(ualab ${ualab_SRC})
+add_executable(UALab ${UALab_SRC})
 # Comile optons
 # target_compile_features(ualab cxx_std_11)
 # Use the Widgets module from Qt 5.
-target_link_libraries(ualab Qt5::Widgets Qt5::SerialPort Qwt::Qwt usbadc10)
+target_link_libraries(UALab Qt5::Widgets Qt5::SerialPort Qwt::Qwt usbadc10)
 
 # Install the executable
-install(TARGETS ualab DESTINATION bin)
+install(TARGETS UALab DESTINATION bin)
