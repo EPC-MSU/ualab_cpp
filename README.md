@@ -12,7 +12,7 @@ git clone https://github.com/EPC-MSU/UALab.git
 cd UALab
 cmake ../
 make
-./ualab
+./UALab
 ```
 I use ninja for development.
 
