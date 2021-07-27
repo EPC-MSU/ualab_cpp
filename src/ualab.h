@@ -16,9 +16,10 @@
 
 #include "usbadc10.h"
 
+#define VERSION "dev"
 #define NUMBERFRAMES 1000
 
-using namespace std::chrono;
+// using namespace std::chrono;
 
 namespace Ui {
 class MainWindow;

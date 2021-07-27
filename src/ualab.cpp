@@ -5,7 +5,6 @@
 #include <qwt_scale_engine.h>
 
 #include <iostream>
-#include <chrono>
 #include <math.h>
 #include <limits.h>
 
