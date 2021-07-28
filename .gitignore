@@ -1,0 +1,4 @@
+build/
+release*/
+usbadc10-*/
+*.kdev4
