@@ -10,6 +10,8 @@ Thread only for view here.
 ```
 git clone https://github.com/EPC-MSU/UALab.git
 cd UALab
+mkdir build
+cd build
 cmake ../
 make
 ./UALab
