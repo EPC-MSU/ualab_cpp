@@ -9,8 +9,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
 # Find libraries
-include(FindQwt.cmake)
-find_package(Qt5 CONFIG REQUIRED Core Widgets Gui SerialPort)
+include(FindQwt_win.cmake)
+IF(${CMAKE_SYSTEM_NAME} STREQUAL Windows)
+    find_package (Qt5 COMPONENTS REQUIRED Core Widgets Gui SerialPort)
+else()   
+    find_package(Qt5 CONFIG REQUIRED Core Widgets Gui SerialPort)
+endif()
 
 #Link to usbadc10
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
@@ -18,7 +22,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     link_directories(${CMAKE_SOURCE_DIR}/usbadc10-debian)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     message ("Windows")
-    link_directories(${CMAKE_SOURCE_DIR}/usbadc10-win64)
+    link_directories(${CMAKE_SOURCE_DIR}/usbadc10-win32)
 else()
     message ("Usuported system")
 endif()

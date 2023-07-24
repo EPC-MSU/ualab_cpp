@@ -24,6 +24,15 @@
 #include "usbadc10.h"
 #include "dataupdater.h"
 
+#if defined(Q_CC_MSVC)
+#  define QT_STATIC_CONST static
+#  define QT_STATIC_CONST_IMPL
+#else
+#  define QT_STATIC_CONST static const
+#  define QT_STATIC_CONST_IMPL const
+#endif
+
+
 #define VERSION "dev"
 #define NUMBERFRAMES 1000
 

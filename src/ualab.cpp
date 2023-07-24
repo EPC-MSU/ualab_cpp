@@ -22,8 +22,8 @@ UALab::UALab (QWidget *parent) :
     grid->enableXMin(true);
     grid->enableY(true);
     grid->enableYMin(true);
-    grid->setMajorPen(QPen(Qt::gray,   1, Qt::SolidLine));
-    grid->setMinorPen(QPen(Qt::gray, 0.5, Qt::DotLine));
+    grid->setMajPen(QPen(Qt::gray,   1, Qt::SolidLine));
+    grid->setMinPen(QPen(Qt::gray, 0.5, Qt::DotLine));
     grid->attach(m_ui->graphWidget);
     QwtPlotPicker *d_picker = new QwtPlotPicker(
         QwtPlot::xBottom, QwtPlot::yLeft,
@@ -37,7 +37,7 @@ UALab::UALab (QWidget *parent) :
     for(int i=0; i < 10; i++)
     {
         cruve[i] = new QwtPlotCurve();
-        cruve[i]->setPen(graphcolor.at(i), 2, Qt::SolidLine);
+        cruve[i]->setPen(graphcolor.at(i)/*, 2, Qt::SolidLine*/);
         cruve[i]->attach(m_ui->graphWidget);
     }
 
@@ -233,7 +233,7 @@ void UALab::connection()
     usbadc10_close_device(&ualab_device);
 
     #ifdef Q_OS_WIN32
-    QString devisename = "com:\\\\.\\" + m_ui->comboBox_ports->currentText();
+    QString ualab_devicename = "com:\\\\.\\" + m_ui->comboBox_ports->currentText();
     #else
         #ifdef Q_OS_LINUX
     QString ualab_devicename = "com:///dev/" + m_ui->comboBox_ports->currentText();
